@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamad Kalbat - Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0A2647;
+            --secondary-color: #144272;
+            --accent-color: #205295;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f0f0;
+            color: var(--dark-color);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .header h2 {
+            color: var(--secondary-color);
+            font-weight: 400;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .contact-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 5px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .profile-text {
+            text-align: justify;
+        }
+        
+        .experience-item, .education-item, .project-item {
+            margin-bottom: 5px;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .item-date {
+            color: var(--accent-color);
+            font-style: italic;
+            white-space: nowrap; /* Prevent date from wrapping */
+        }
+        
+        .item-subtitle {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .item-details ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .skill-category h4 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .skill-item {
+            background-color: var(--light-color);
+            padding: 5px 8px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+        
+        .download-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Hide the download button when printing */
+        @media print {
+            .download-btn {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0px;
+                margin: 0px;
+            }
+            body {
+                background: white;
+            }
+            /* Ensure the item-header stays as flex with space-between in print mode */
+            .item-header {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+            }
+            .item-date {
+                margin-left: auto; /* Push date to the right */
+            }
+        }
+        
+        /* For smaller screens - keep the date on same row */
+        @media (max-width: 768px) {
+            .container {
+                padding: 5px;
+                margin: 5px;
+            }
+            
+            /* Modified to keep dates on the same line */
+            .item-header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .item-title {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .skills-container {
+                flex-direction: column;
+            }
+        }
+        
+        .course-item {
+            margin-bottom: 5px;
+        }
+        
+        .course-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .course-description {
+            font-size: 0.8rem;
+            margin-top: 0px;
+            margin-left: 5px;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 5px;
+        }
+        
+        .project-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .project-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="resume-content">
+        <div class="header">
+            <h1>HAMAD KALBAT</h1>
+            <h2>COMPUTER SCIENCE STUDENT</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <a href="https://linkedin.com/in/hamad-kalbat" target="_blank">linkedin.com/in/hamad-kalbat</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>052-552-5562</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:hamadyounus101@gmail.com">hamadyounus101@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Dubai, UAE</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/hamadkalbat" target="_blank">github.com/hamadkalbat</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/hamadkalbat/resume" target="_blank">Resume Website</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">PROFILE</h3>
+            <p class="profile-text">
+                Computer science student at the American University of Sharjah. Seeking opportunities to learn new skills, and enhance my work experience. My main strengths lie in critical thinking, problem-solving, and acquiring knowledge. In my life experiences, I have learned to work hard and be able to overcome any obstacle that may arise. Post graduating I plan to pursue a career as a computer scientist at major tech corporations.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">EDUCATION</h3>
+            <div class="education-item">
+                <div class="item-header">
+                    <span class="item-title">Bachelor of Science in Computer Science</span>
+                    <span class="item-date">2022 - Present</span>
+                </div>
+                <div class="item-subtitle">American University of Sharjah</div>
+                <div class="item-details">
+                    <p>Senior Student | Current GPA: <strong>3.33</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">WORK EXPERIENCE</h3>
+            <div class="experience-item">
+                <div class="item-header">
+                    <span class="item-title">Internship At Du</span>
+                    <span class="item-date">May - July 2024</span>
+                </div>
+                <div class="item-subtitle">Technology Sector - Solution Delivery and Development Department</div>
+                <div class="item-details">
+                    <ul>
+                        <li>Front-end application development using HTML, CSS, and JavaScript as a React application</li>
+                        <li>Back-end application development using Java on Spring Boot Framework</li>
+                        <li>Utilized Databases using SQL on MySQL and H2</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-item">
+                <div class="item-header">
+                    <span class="item-title">Summer Training At RTA</span>
+                    <span class="item-date">June - July 2022</span>
+                </div>
+                <div class="item-subtitle">Technology Sector - IT Department</div>
+                <div class="item-details">
+                    <ul>
+                        <li>RTA GIS Training on Dubai mapping</li>
+                        <li>Computer Network training on how RTA network is connected</li>
+                        <li>EIP Training</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">SKILLS</h3>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h4>Programming Languages</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">C++</span>
+                        <span class="skill-item">Java</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">SQL</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Web Development</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">HTML</span>
+                        <span class="skill-item">CSS</span>
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Express</span>
+                        <span class="skill-item">Spring Boot</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Database & Cloud</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">MySQL</span>
+                        <span class="skill-item">Microsoft Azure</span>
+                        <span class="skill-item">H2</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>AI & Data Science</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">Machine Learning</span>
+                        <span class="skill-item">Computer Vision</span>
+                        <span class="skill-item">Neural Networks</span>
+                        <span class="skill-item">Image Processing</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Security</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">Network Security</span>
+                        <span class="skill-item">Firewalls</span>
+                        <span class="skill-item">Threat Detection</span>
+                        <span class="skill-item">Vulnerability Assessment</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Other Skills</h4>
+                    <div class="skill-list">
+                        <span class="skill-item">Problem-Solving</span>
+                        <span class="skill-item">Teamwork & Time Management</span>
+                        <span class="skill-item">Microsoft Word/Excel/Powerpoint</span>
+                        <span class="skill-item">Project Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">LANGUAGES</h3>
+            <div class="language-item">
+                <span>English</span>
+                <span>Professional Proficiency</span>
+            </div>
+            <div class="language-item">
+                <span>Arabic</span>
+                <span>Native Proficiency</span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">PROJECTS</h3>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h4 class="item-title">ConvNext-Tiny Evaluation</h4>
+                    <p>Evaluated the ConvNext-Tiny pretrained model on various datasets for computer vision tasks.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/hamadkalbat/VisionProject" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4 class="item-title">Du Device Catalog Page</h4>
+                    <p>Recreation of the Du device catalog page using modern web technologies.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/hamadkalbat/DuCatalogProject" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4 class="item-title">Desert Camp Booking System</h4>
+                    <p>Web application using Java/Spring Boot for a desert camp hosting business with front-end, back-end, and database components.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/CMP257-24F" target="_blank">
+                            <i class="fab fa-github"></i> GitHub Org
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4 class="item-title">Test Forge</h4>
+                    <p>Web application using Node.js and Express that tests code by leveraging AI (Claude) to generate and fix test cases.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/COE-420-S25" target="_blank">
+                            <i class="fab fa-github"></i> GitHub Org
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">RELEVANT COURSES</h3>
+            <div class="course-item">
+                <div class="course-title">Software Engineering & Testing</div>
+                <div class="course-description">Applied software engineering methodologies, life cycle models, creating well thought software programs, utilizing Node.js and Express to create web applications and publish them on Microsoft Azure, using test cases and mutation testing.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Data Structures & Design Analysis of Algorithms</div>
+                <div class="course-description">Fundamentals of data structures and algorithm design, implementation, and analysis. Problem solving different applications and creating efficient algorithms with proper time and space complexity considerations.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Computer Networks</div>
+                <div class="course-description">Understanding network principles, protocols, routing, and setting up network structures.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Computer Security</div>
+                <div class="course-description">Understanding different cybersecurity protocols, firewalls, malwares, principles, attack detection and prevention.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Artificial Intelligence & Data Science</div>
+                <div class="course-description">Understanding different AI methods of searching, mapping, localization, analyzing data, training and testing AI models.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Computer Vision</div>
+                <div class="course-description">Understanding how to process images, extract and match key points, create and use convolutional neural networks as AI models for classification, object detection, image segmentation.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Senior Design Project</div>
+                <div class="course-description">AI Fall Detection and Hand Gesture Recognition System for Impaired Humans with Smart Home Integration. Fully documented requirements, planning, process, and testing.</div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="download-btn" id="download-pdf">
+        <i class="fas fa-file-pdf"></i> Download/Print PDF<br>
+        - Set to A4
+    </button>
+    
+    <script>
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+</body>
+</html>
